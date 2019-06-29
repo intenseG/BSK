@@ -6,6 +6,9 @@ configuration: Release
 platform: x64
 matrix:
   fast_finish: true
+artifacts:
+  - path: msvc\x64\$(configuration)
+    name: BSK
 environment:
   matrix:
   - cmake_build: 1
