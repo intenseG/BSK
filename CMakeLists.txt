@@ -47,7 +47,7 @@ if(USE_BLAS)
 else()
 message(STATUS "Using built-in matrix library.")
 endif()
-find_package(Qt5Core)
+find_package(Qt5 COMPONENTS REQUIRED Core)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
