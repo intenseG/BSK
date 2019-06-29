@@ -7,7 +7,7 @@ platform: x64
 matrix:
   fast_finish: true
 artifacts:
-  - path: msvc\x64\$(configuration)
+  - path: build\$(configuration)
     name: BSK
 environment:
   matrix:
