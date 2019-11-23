@@ -334,10 +334,24 @@ UCTNode* UCTNode::uct_select_child(int color, bool is_root) {
         } else if (child.get_visits() > 0) {
             winrate = child.get_eval(color);
         }
+
+        // calculate opportunity and risk
+        double opportunity = -1.0, risk = 2.0;
+
+        for (const auto& child2 : child->m_children)
+        {
+            if (child2->valid())
+            {
+                auto child_winrate = child2->get_eval(color);
+                if (child_winrate > opportunity) opportunity = child_winrate;
+                if (child_winrate < risk) risk = child_winrate;
+            }
+        }
+
         const auto psa = child.get_policy();
         const auto denom = 1.0 + child.get_visits();
         const auto puct = cfg_puct * psa * (numerator / denom);
-        const auto value = winrate + puct;
+        const auto value = winrate * 0.5 + opportunity * 0.3 + risk * 0.2 + puct;
         assert(value > std::numeric_limits<double>::lowest());
 
         if (value > best_value) {

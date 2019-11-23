@@ -425,7 +425,9 @@ bool UCTSearch::should_resign(passflag_t passflag, float besteval) {
 
     const auto is_default_cfg_resign = cfg_resignpct < 0;
     const auto resign_threshold =
-        0.01f * (is_default_cfg_resign ? 10 : cfg_resignpct);
+        0.01f * (is_default_cfg_resign ? (1.0f * cfg_resignpct) : cfg_resignpct);
+    // const auto resign_threshold =
+    //     0.01f * (is_default_cfg_resign ? 10 : cfg_resignpct);
     if (besteval > resign_threshold) {
         // eval > cfg_resign
         return false;
@@ -761,6 +763,9 @@ int UCTSearch::think(int color, passflag_t passflag) {
             color, m_rootstate.get_movenum());
 
     myprintf("Thinking at most %.1f seconds...\n", time_for_move/100.0f);
+
+    myprintf("start not play ladder.\n");
+	{ extern size_t s_root_movenum; s_root_movenum = m_rootstate.get_movenum(); }
 
     // create a sorted list of legal moves (make sure we
     // play something legal and decent even in time trouble)

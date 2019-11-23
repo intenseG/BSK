@@ -5,6 +5,9 @@ leelaz
 training/tf/leelalogs
 training/tf/checkpoint
 training/tf/venv
+training/tf/engine1
+training/tf/engine2
+training/tf/requirements.txt
 leelaz-model*
 *.orig
 leelaz_opencl_tuning
@@ -13,3 +16,5 @@ leelaz_opencl_tuning
 .vs/
 .vscode/*
 build/
+opening/
+msvc/x64/

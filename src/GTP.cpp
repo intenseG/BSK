@@ -407,7 +407,6 @@ const std::string GTP::s_commands[] = {
     "kgs-genmove_cleanup",
     "kgs-time_settings",
     "kgs-game_over",
-    "kgs-chat",
     "heatmap",
     "lz-analyze",
     "lz-genmove_analyze",
@@ -998,28 +997,15 @@ void GTP::execute(GameState & game, const std::string& xinput) {
         // kgs-chat (game|private) Name Message
         std::istringstream cmdstream(command);
         std::string tmp;
-        // std::string mode;
-        std::string winrate;
-        Network::Netresult vec;
 
         cmdstream >> tmp; // eat kgs-chat
         cmdstream >> tmp; // eat game|private
         cmdstream >> tmp; // eat player name
         do {
             cmdstream >> tmp; // eat message
-            if (tmp.find("wr") != std::string::npos) {
-                vec = s_network->get_output(
-                    &game, Network::Ensemble::AVERAGE, -1, false);
-                winrate = "winrate: ";
-                winrate += std::to_string(vec.winrate);
-            }
-            // } else {
-            //     gtp_fail_printf(id, "I'm a go bot, not a chat bot.");
-            // }
         } while (!cmdstream.fail());
 
-        gtp_printf(id, "%s\n", winrate.c_str());
-        // gtp_fail_printf(id, "I'm a go bot, not a chat bot.");
+        gtp_fail_printf(id, "I'm a go bot, not a chat bot.");
         return;
     } else if (command.find("kgs-game_over") == 0) {
         // Do nothing. Particularly, don't ponder.
